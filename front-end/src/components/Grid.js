@@ -42,24 +42,26 @@ export const Td = styled.td`
   }
 `;
 
-const Grid = ({ cliente, setClientes, setOnEdit }) => {
+const Grid = ({ cliente, setCliente, setOnEdit }) => {
   const handleEdit = (item) => {
     setOnEdit(item);
   };
 
-  const handleDelete = async (id) => {
-    await axios 
-      .delete("http://localhost:8800/" + id)
-      .then(({ data }) => {
-        const newArray = cliente.filter((cliente) => cliente.id !== id);
-        
-        setClientes(newArray);
-        toast.success(data);
-      })
-     .catch((err) => toast.error(err.response?.data || "Erro ao excluir"))
-
-
-    setOnEdit(null);
+const handleDelete = async (id) => {
+  try {
+    const response = await axios.delete(`http://localhost:8800/${id}`);
+    
+    if (response.status >= 200 && response.status < 300) {
+      setCliente(prev => prev.filter(cliente => cliente.id !== id));
+      toast.success("Cliente excluído com sucesso!");
+      setOnEdit(null);
+    } else {
+      throw new Error("Resposta não bem-sucedida");
+    }
+  } catch (err) {
+    console.error("Erro ao excluir cliente:", err);
+    toast.error(err.response?.data?.message || "Erro ao excluir cliente!");
+  }
 };
 
   return (

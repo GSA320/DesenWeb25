@@ -36,7 +36,7 @@ function App() {
 
  useEffect(() => {
    getCliente();
- }, [setCliente]); 
+ }, []); 
 
   return (
     <>

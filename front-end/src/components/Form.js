@@ -52,6 +52,16 @@ const Form = ({ getCliente, onEdit, setOnEdit }) => {
     cliente.data_nascimento.value = onEdit.data_nascimento;
     }
   }, [onEdit]);
+   
+ useEffect(() => {
+  if (!onEdit && ref.current) {
+    // Limpa os campos quando a edição termina
+    ref.current.nome.value = "";
+    ref.current.email.value = "";
+    ref.current.telefone.value = "";
+    ref.current.data_nascimento.value = "";
+  }
+}, [onEdit]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,9 +85,11 @@ const Form = ({ getCliente, onEdit, setOnEdit }) => {
         telefone: cliente.telefone.value,
         data_nascimento: cliente.data_nascimento.value,
        })
-       .then(({ data }) => toast.success(data))
-       .catch((err) => toast.error(err.response?.data || "Erro ao salvar"))
-
+      .then(({ data }) => {
+      toast.success(data);
+      setOnEdit(null); // ← move aqui
+    })
+    .catch((err) => toast.error(err.response?.data || "Erro ao salvar"));
     } else {
       await axios
        .post("http://localhost:8800", {
@@ -86,9 +98,12 @@ const Form = ({ getCliente, onEdit, setOnEdit }) => {
         telefone: cliente.telefone.value,
         data_nascimento: cliente.data_nascimento.value,
        })
-       .then(({ data }) => toast.success(data))
-       .catch((err) => toast.error(err.response?.data || "Erro ao salvar"))
-    }
+     .then(({ data }) => {
+      toast.success(data);
+      setOnEdit(null); // ← move aqui também
+    })
+    .catch((err) => toast.error(err.response?.data || "Erro ao salvar"));
+}
 
     cliente.nome.value = "";
     cliente.email.value = "";
@@ -97,7 +112,6 @@ const Form = ({ getCliente, onEdit, setOnEdit }) => {
     
     setOnEdit(null);
     getCliente();
-
   };
 
   return (

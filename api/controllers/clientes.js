@@ -52,16 +52,19 @@ export const updateClientes = (req, res) => {
 
 
 export const deleteClientes = (req, res) => {
- const q = 
-    "DELETE FROM cliente WHERE `id` = ?";
+  const q = "DELETE FROM cliente WHERE `id` = ?";
 
- db.query(q, [req.params.id], (err) => {
-   if (err) return res.json(err);
-
- return res.status(200).json("Cliente deletado com sucesso.");
- });
-};
-
+  db.query(q, [req.params.id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Erro no banco ao deletar cliente." });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Cliente não encontrado." });
+    }
+    return res.status(200).json({ message: "Cliente deletado com sucesso." });
+  });
+}
 
 
 
