@@ -49,7 +49,7 @@ const Grid = ({ cliente, setCliente, setOnEdit }) => {
 
 const handleDelete = async (id) => {
   try {
-    const response = await axios.delete(`http://localhost:8800/${id}`);
+    const response = await axios.delete(`http://localhost:8800/api/clientes/${id}`);
     
     if (response.status >= 200 && response.status < 300) {
       setCliente(prev => prev.filter(cliente => cliente.id !== id));

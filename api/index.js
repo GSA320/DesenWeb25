@@ -1,12 +1,17 @@
 import express from "express";
-import getClientes from "./routes/clientes.js";
 import cors from "cors";
+import clienteRoutes from "./routes/clientes.js";
+import agendamentoRoutes from "./routes/agendamentos.js";
 
-const app = express()
+const app = express();
 
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 
-app.use("/", getClientes)
+// Prefixos organizados
+app.use("/api/clientes", clienteRoutes);
+app.use("/api/agendamentos", agendamentoRoutes);
 
-app.listen(8800)
+app.listen(8800, () => {
+  console.log("Servidor rodando na porta 8800");
+});

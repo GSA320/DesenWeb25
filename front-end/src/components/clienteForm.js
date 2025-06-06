@@ -79,7 +79,7 @@ const Form = ({ getCliente, onEdit, setOnEdit }) => {
 
     if(onEdit){
       await axios
-       .put("http://localhost:8800/" + onEdit.id,{
+       .put(`http://localhost:8800/api/clientes/${onEdit.id}`, {
         nome: cliente.nome.value,
         email: cliente.email.value,
         telefone: cliente.telefone.value,
@@ -92,7 +92,7 @@ const Form = ({ getCliente, onEdit, setOnEdit }) => {
     .catch((err) => toast.error(err.response?.data || "Erro ao salvar"));
     } else {
       await axios
-       .post("http://localhost:8800", {
+       .post("http://localhost:8800/api/clientes", {
         nome: cliente.nome.value,
         email: cliente.email.value,
         telefone: cliente.telefone.value,

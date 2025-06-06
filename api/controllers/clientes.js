@@ -1,6 +1,7 @@
 import { db } from "../db.js";
 
 export const getClientes = (_,res) => {
+  console.log("Rota GET /agendamentos chamada");
   const q = "SELECT * FROM cliente";
 
   db.query(q, (err, data) => {
