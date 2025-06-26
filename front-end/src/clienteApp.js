@@ -40,7 +40,7 @@ function App() {
 
   return (
     <>
-      <h1 style={{ color: "black" }}></h1>
+      <h1 style={{ color: "black" }}>Agendamento Online</h1>
       <Container>
         <Title>CLIENTES</Title>
         <Form onEdit={onEdit} setOnEdit={setOnEdit} getCliente={getCliente} />
